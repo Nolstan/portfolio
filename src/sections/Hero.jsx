@@ -1,11 +1,116 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import HeroOrb from "../components/three/HeroOrb";
+
+
+function MagneticButton({ children, href, primary = false }) {
+  const buttonRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const button = buttonRef.current;
+
+    if (!button) return;
+
+    const rect = button.getBoundingClientRect();
+
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    button.style.transform = `
+      translate(${x * 0.18}px, ${y * 0.18}px)
+    `;
+  };
+
+  const handleMouseLeave = () => {
+    const button = buttonRef.current;
+
+    if (!button) return;
+
+    button.style.transform = "translate(0px, 0px)";
+  };
+
+  return (
+    <a
+      ref={buttonRef}
+      href={href}
+      className={`hero-button ${
+        primary
+          ? "hero-button-primary"
+          : "hero-button-secondary"
+      }`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </a>
+  );
+}
 
 function Hero() {
   const [mousePosition, setMousePosition] = useState({
     x: 0,
     y: 0,
   });
+  const [typedText, setTypedText] = useState("");
+  const [isAltFont, setIsAltFont] = useState(false);
+
+  useEffect(() => {
+    const defaultText = "digital experiences.";
+    const alternateText = "digital experiences.";
+
+    let currentText = "";
+    let phase = 0;
+    let timeoutId;
+
+    const tick = () => {
+      if (phase === 0) {
+        currentText = defaultText.slice(0, currentText.length + 1);
+        setTypedText(currentText);
+        setIsAltFont(false);
+
+        if (currentText.length < defaultText.length) {
+          timeoutId = setTimeout(tick, 90);
+          return;
+        }
+
+        phase = 1;
+        timeoutId = setTimeout(tick, 1200);
+        return;
+      }
+
+      if (phase === 1) {
+        currentText = defaultText.slice(0, currentText.length - 1);
+        setTypedText(currentText);
+        setIsAltFont(false);
+
+        if (currentText.length > 0) {
+          timeoutId = setTimeout(tick, 60);
+          return;
+        }
+
+        phase = 2;
+        timeoutId = setTimeout(tick, 250);
+        return;
+      }
+
+      if (phase === 2) {
+        currentText = alternateText.slice(0, currentText.length + 1);
+        setTypedText(currentText);
+        setIsAltFont(true);
+
+        if (currentText.length < alternateText.length) {
+          timeoutId = setTimeout(tick, 90);
+          return;
+        }
+
+        phase = 3;
+      }
+    };
+
+    timeoutId = setTimeout(tick, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -24,6 +129,8 @@ function Hero() {
 
   return (
     <section className="hero" id="home">
+      <HeroOrb />
+      
       <motion.div
         className="hero-background"
         animate={{
@@ -63,7 +170,10 @@ function Hero() {
         >
           Building
           <br />
-          <span>digital experiences.</span>
+          <span className={`hero-typed-text ${isAltFont ? "hero-typed-alt" : ""}`}>
+            {typedText}
+            <span className="hero-cursor">|</span>
+          </span>
         </motion.h1>
 
         <motion.p
@@ -89,14 +199,14 @@ function Hero() {
             delay: 0.8,
           }}
         >
-          <a href="#work" className="hero-button hero-button-primary">
+          <MagneticButton href="#work" primary>
             Explore my work
             <span>↗</span>
-          </a>
+          </MagneticButton>
 
-          <a href="#contact" className="hero-button hero-button-secondary">
+          <MagneticButton href="#contact">
             Let's connect
-          </a>
+          </MagneticButton>
         </motion.div>
       </div>
 
