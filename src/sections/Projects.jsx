@@ -1,6 +1,9 @@
+import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
+
 import fadaHouseImage from "../assets/images/projects/fada-house.jpeg";
 import budgetAIImage from "../assets/images/projects/budgetai.jpeg";
+
 const projects = [
   {
     number: "01",
@@ -33,12 +36,57 @@ const projects = [
   },
 ];
 
+const headingVariants = {
+  hidden: {
+    opacity: 0,
+    y: 100,
+  },
+
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 140,
+    scale: 0.92,
+    rotateX: 8,
+  },
+
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    transition: {
+      duration: 1.1,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 function Projects() {
   return (
     <section className="projects-section" id="work">
-      <div className="section-heading">
+      <motion.div
+        className="projects-heading"
+        variants={headingVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          once: true,
+          amount: 0.4,
+        }}
+      >
         <div>
-          <p className="section-label">SELECTED WORK</p>
+          <p className="section-label">01 — SELECTED WORK</p>
 
           <h2>
             Things I've
@@ -47,18 +95,33 @@ function Projects() {
           </h2>
         </div>
 
-        <p className="section-intro">
-          A collection of products, experiments and digital
-          experiences I've designed and developed.
+        <p className="projects-intro">
+          A selection of products, experiments, and
+          projects I've built while exploring technology
+          and solving real problems.
         </p>
-      </div>
+      </motion.div>
 
       <div className="projects-grid">
-        {projects.map((project) => (
-          <ProjectCard
+        {projects.map((project, index) => (
+          <motion.div
             key={project.number}
-            project={project}
-          />
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{
+              once: true,
+              amount: 0.25,
+            }}
+            transition={{
+              delay: index * 0.12,
+            }}
+            style={{
+              perspective: "1200px",
+            }}
+          >
+            <ProjectCard project={project} />
+          </motion.div>
         ))}
       </div>
     </section>
