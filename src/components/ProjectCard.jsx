@@ -56,9 +56,20 @@ function ProjectCard({ project }) {
           {project.number}
         </div>
 
-        <div className="project-arrow">
-          ↗
-        </div>
+        {project.live ? (
+          <a
+            className="project-arrow"
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit ${project.title} website`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            ↗
+          </a>
+        ) : (
+          <div className="project-arrow">↗</div>
+        )}
 
         <div className="project-cursor-glow" />
       </div>
@@ -82,6 +93,17 @@ function ProjectCard({ project }) {
           <span key={item}>{item}</span>
         ))}
       </div>
+
+      {project.live && (
+        <a
+          className="project-live-link"
+          href={project.live}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View live website <span aria-hidden="true">↗</span>
+        </a>
+      )}
     </article>
   );
 }
