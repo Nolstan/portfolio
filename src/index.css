@@ -1969,3 +1969,26 @@ button {
     opacity: 0;
   }
 }
+
+/* Live project links */
+.project-live-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.25s ease, gap 0.25s ease;
+}
+
+.project-live-link:hover {
+  color: #fff;
+  gap: 12px;
+}
+
+.project-arrow[href] {
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
