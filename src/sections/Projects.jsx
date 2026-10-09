@@ -20,6 +20,7 @@ const projects = [
     title: "CYCLEWISE",
     category: "MOBILE APPLICATION",
     image: null,
+    live: "https://cyclewiseplus.vercel.app/",
     description:
       "A mobile application designed to help users understand and track their menstrual cycles.",
     tech: ["React Native", "Expo", "Express", "MongoDB"],
