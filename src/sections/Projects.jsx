@@ -17,17 +17,28 @@ const projects = [
 
   {
     number: "02",
-    title: "CYCLEWISE",
-    category: "MOBILE APPLICATION",
+    title: "CYCLEWISE+",
+    category: "WOMEN'S HEALTH & WELLNESS",
     image: null,
     live: "https://cyclewiseplus.vercel.app/",
     description:
-      "A mobile application designed to help users understand and track their menstrual cycles.",
+      "A menstrual cycle tracking and wellness product, with a mobile app and a modern companion website.",
     tech: ["React Native", "Expo", "Express", "MongoDB"],
   },
 
   {
     number: "03",
+    title: "NDAMYO",
+    category: "LUXURY RESTAURANT WEBSITE",
+    image: null,
+    live: "https://ndamyo-restaurant.onrender.com",
+    description:
+      "A cinematic restaurant website concept focused on an elegant visual experience, immersive motion, and premium dining.",
+    tech: ["React", "Vite", "GSAP", "CSS"],
+  },
+
+  {
+    number: "04",
     title: "BUDGETAI",
     category: "AI FINANCE PLATFORM",
     image: budgetAIImage,
